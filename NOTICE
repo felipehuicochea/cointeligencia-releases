@@ -1,0 +1,12 @@
+Cointeligencia desktop - test builds
+Copyright (c) 2026 Cointeligencia. All rights reserved.
+
+The installers published in this repository's releases are proprietary,
+pre-release test builds. They are provided only for testing by invited
+testers, "as is", without warranty of any kind. They may not be redistributed,
+modified, reverse engineered or used for any other purpose without written
+permission. Trading carries risk of loss. Live-test builds can place real
+orders once you opt in, and you are responsible for any orders placed.
+
+Third-party open-source components bundled in the app (e.g. Electron) remain
+under their own licenses, included inside the application package.
