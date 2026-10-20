@@ -19,6 +19,9 @@ Downloads are on the [Releases](../../releases) page.
 | macOS Apple silicon (M1 or newer) | macOS 12.0 Monterey |
 | macOS Intel | macOS 12.0 Monterey |
 | Windows x64 | Windows 10 |
+| Linux x64 | glibc 2.34 or newer: Ubuntu 22.04, Debian 12, Fedora 35, RHEL / Rocky / Alma 9, or newer |
+
+On Linux, check yours with `ldd --version` (first line, e.g. `2.35`). Ubuntu 20.04 and Debian 11 are **not** supported; their glibc is too old.
 
 ## Which file to download
 
@@ -28,6 +31,8 @@ Downloads are on the [Releases](../../releases) page.
 | macOS Intel | `Cointeligencia-<version>-x64.dmg` (or `.zip`) |
 | Windows (installer) | `Cointeligencia-Setup-<version>.exe` |
 | Windows (portable, no install) | `Cointeligencia-<version>-portable.exe` |
+| Linux x64 (any distro, no install) | `Cointeligencia-<version>-x86_64.AppImage` |
+| Linux x64 (Ubuntu, Debian and derivatives) | `Cointeligencia-<version>-amd64.deb` |
 
 Not sure which Mac you have? Open  menu → **About This Mac**. "Chip: Apple M…" means Apple silicon; "Processor: Intel…" means Intel.
 
@@ -40,6 +45,36 @@ Not sure which Mac you have? Open  menu → **About This Mac**. "Chip: Apple M�
 ### Windows
 1. Run `Cointeligencia-Setup-<version>.exe` and follow the installer. Or just run the portable `.exe`.
 2. If SmartScreen appears, see below.
+
+### Linux (x64)
+Use either format.
+
+**AppImage** (any distribution, nothing to install):
+
+```sh
+chmod +x Cointeligencia-<version>-x86_64.AppImage
+./Cointeligencia-<version>-x86_64.AppImage
+```
+
+AppImages need FUSE 2. If it doesn't start and mentions `libfuse.so.2`, install it:
+
+```sh
+sudo apt install libfuse2      # Ubuntu 22.04
+sudo apt install libfuse2t64   # Ubuntu 24.04 and newer (the package was renamed)
+```
+
+Do **not** install the `fuse` package on Ubuntu 22.04 or newer; it can remove parts of the desktop.
+To skip FUSE entirely, start it with `--appimage-extract-and-run`.
+On Ubuntu 24.04 and newer, if the app closes immediately with a sandbox error, start it with `--no-sandbox`.
+
+**.deb** (Ubuntu, Debian and derivatives):
+
+```sh
+sudo apt install ./Cointeligencia-<version>-amd64.deb
+```
+
+Keep the `./` so apt installs the local file and pulls in its dependencies. The app then appears in your
+applications menu as **Cointeligencia**. Remove it with `sudo apt remove cointeligencia-desktop`.
 
 ## Opening unsigned test builds
 
@@ -70,6 +105,7 @@ Every release includes a `SHA256SUMS.txt`. Compare it with the checksum of your 
 
 - **macOS:** `shasum -a 256 ~/Downloads/Cointeligencia-*.dmg`
 - **Windows (PowerShell):** `Get-FileHash .\Cointeligencia-Setup-*.exe -Algorithm SHA256`
+- **Linux:** in the download folder, `sha256sum -c SHA256SUMS.txt --ignore-missing`
 
 The value must match the line for that file in `SHA256SUMS.txt`. If it doesn't, don't open the file; download it again.
 
